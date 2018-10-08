@@ -161,21 +161,28 @@ def poisson_2d_mask(mask,*args, **kwargs):
 
 
 
-def sol(b,*arg, **kwargs):
-
-  si_a = b.shape
-
-  psi = b.flatten()
+def sol(rhs,*arg, **kwargs):
+  """
+  Solve a linear System
+  
+  :param  rhs: the right hand side of the linear system (2d np array)
+  :param  mat: The linear operator (optional: default: poisson)
+  
+  :returns: The solution of the 2d system (same shape as rhs)
+  
+  :raises: TODO
+  """
+  
+  si_a = rhs.shape
+  
+  psi = np.array(rhs).flatten()
 
   n = np.int(np.sqrt(len(psi)))
-  
-  # get opt. args
-  L = kwargs.get('mat', None)
-  
-  if (not L) : 
-    L = poisson2d(n)
 
-  
+  # get opt. args
+  L = kwargs.get('mat')
+#  L = kwargs.get('mat', poisson2d(n))
+    
   x = spsolve(L.tocsr(),psi)
 
   xsol = x.reshape(si_a)
