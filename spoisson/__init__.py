@@ -180,8 +180,8 @@ def sol(rhs,*arg, **kwargs):
   n = np.int(np.sqrt(len(psi)))
 
   # get opt. args
-  L = kwargs.get('mat')
-#  L = kwargs.get('mat', poisson2d(n))
+#  L = kwargs.get('mat')
+  L = kwargs.get('mat', poisson2d(n))
     
   x = spsolve(L.tocsr(),psi)
 
